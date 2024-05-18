@@ -67,14 +67,14 @@ export class Card implements InvestecCard {
   public AccountNumber: string;
   public AccountId: string;
   constructor(private client: Client, card: InvestecCard) {
-    this.CardKey = card.CardKey;
-    this.CardNumber = card.CardNumber;
-    this.IsProgrammable = card.IsProgrammable;
-    this.Status = card.Status;
-    this.CardTypeCode = card.CardTypeCode;
-    this.AccountNumber = card.AccountNumber;
-    this.AccountId = card.AccountId;
-  }
+    this.CardKey = card.cardKey;
+    this.CardNumber = card.cardNumber;
+    this.IsProgrammable = card.isProgrammable;
+    this.Status = card.status;
+    this.CardTypeCode = card.cardTypeCode;
+    this.AccountNumber = card.accountNumber;
+    this.AccountId = card.accountId;
+  }  
 
   public async getSavedCode(): Promise<InvestecCardCode> {
     if (!this.client.token) {
