@@ -22,13 +22,14 @@ export interface InvestecAccount {
 }
 
 export interface InvestecCard {
-  CardKey: string;
-  CardNumber: string;
-  IsProgrammable: boolean;
-  Status: string;
-  CardTypeCode: string;
-  AccountNumber: string;
-  AccountId: string;
+  cardKey: string;
+  cardNumber: string;
+  isProgrammable: boolean;
+  status: string;
+  cardTypeCode: string;
+  accountNumber: string;
+  accountId: string;
+  isVirtualCard: boolean;
 }
 
 export interface InvestecCardCode {
@@ -38,6 +39,13 @@ export interface InvestecCardCode {
   updatedAt: string;
   publishedAt: string;
   error: any;
+}
+
+export interface InvestecCardVirtualResponse {
+  cardKey: string;
+  isVirtualCard: boolean;
+  embossName: string;
+  embossName2: string;
 }
 
 export interface InvestecSimulateExecutionInput {
@@ -202,6 +210,10 @@ export type InvestecCardsResponse = InvestecGenericResponse<{
 
 export type InvestecCardCodeResponse = InvestecGenericResponse<{
   result: InvestecCardCode;
+}>;
+
+export type InvestecCardCreateResponse = InvestecGenericResponse<{
+  result: InvestecCardVirtualResponse;
 }>;
 
 export type InvestecCardExecutionResponse = InvestecGenericResponse<{

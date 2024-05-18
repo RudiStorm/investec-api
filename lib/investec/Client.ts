@@ -6,12 +6,15 @@ import {
   getInvestecOAuthRedirectUrl,
   getInvestecOAuthToken,
   getInvestecToken,
+  postInvestecCardVirtualCardCreate,
   refreshInvestecOAuthToken,
 } from "../util/investec";
 import {
   InvestecAuthResponse,
   InvestecBeneficiary,
   InvestecBeneficiaryCategory,
+  InvestecCardCreateResponse,
+  InvestecCardVirtualResponse,
   InvestecToken,
   isResponseBad,
   Realm,
@@ -92,6 +95,27 @@ export class Client {
       throw new Error("not ok response from getting cards: " + cards);
     }
     return cards.data.cards.map((c) => new Card(this, c));
+  }
+
+  public async createVirtualCard(accountNumber: string,cardEmbossName: string, cardEmbossName2:string): Promise<InvestecCardVirtualResponse> {
+    if (!this.token) {
+      throw new Error("client is not set up");
+    }
+
+    const newVirtualCard = await postInvestecCardVirtualCardCreate(
+      this.token.access_token,
+      accountNumber,
+      cardEmbossName,
+      cardEmbossName2
+    );
+    if (isResponseBad(newVirtualCard)) {
+      throw new Error(
+        `not ok response while creating a new virtual card: ${{
+          response: newVirtualCard,
+        }}`
+      );
+    }
+    return newVirtualCard.data.result;
   }
 
   public async getBeneficiaries(): Promise<InvestecBeneficiary[]> {

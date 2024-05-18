@@ -17,6 +17,8 @@ import {
   InvestecAccountPaymentResponse,
   InvestecBeneficiariesResponse,
   InvestecBeneficiaryCategoriesResponse,
+  InvestecCardVirtualResponse,
+  InvestecCardCreateResponse,
 } from "./model";
 
 const RealmSelector: { [key in Realm]: "pb" | "bb" } = {
@@ -461,3 +463,26 @@ export const getInvestecCardMerchants = async (
   );
   return safeResponse<InvestecCardNameCodeResponse>(envResponse);
 };
+
+export const postInvestecCardVirtualCardCreate = async (
+  token: string,
+  accountNumber: string,
+  cardEmbossName: string,
+  cardEmbossName2: string
+): Promise<InvestecCardCreateResponse> => {
+  const body = { accountNumber, cardEmbossName, cardEmbossName2};
+  const response = await fetch(
+    `${INVESTEC_BASE_URL}/za/v1/cards`,
+    {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+        ...getBasicHeaders(token),
+      },
+    }
+  );
+  return safeResponse<InvestecCardCreateResponse>(response);
+};
+
+
